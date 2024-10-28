@@ -1,5 +1,9 @@
 package com.corndel.framerate;
 
+import com.corndel.framerate.models.Movie;
+import com.corndel.framerate.repositories.MovieRepository;
+import com.corndel.framerate.repositories.ReviewRepository;
+import io.javalin.http.HttpStatus;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -30,7 +34,20 @@ public class App {
         });
 
     app.get("/", ctx -> {
-      ctx.result("Hello, World!");
+      var users = MovieRepository.findAll();
+        ctx.json(users);
+    });
+
+    app.get("/movie/{movieId}", ctx -> {
+      var id = Integer.parseInt(ctx.pathParam("movieId"));
+      var user = MovieRepository.findById(id);
+      ctx.status(HttpStatus.IM_A_TEAPOT).json(user);
+    });
+
+    app.get("/movies/{genre}", ctx -> {
+        var genre = ctx.pathParam("genre");
+        var users = MovieRepository.findByGenre(genre);
+        ctx.json(users);
     });
 
     return app;
