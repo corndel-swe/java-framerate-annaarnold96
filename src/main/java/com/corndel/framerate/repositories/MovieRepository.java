@@ -73,7 +73,7 @@ public class MovieRepository {
   }
 
   public static Movie findById(int id) throws SQLException {
-    var query = "SELECT * FROM MOVIES WHERE id = ?";
+    var query = "SELECT * FROM MOVIES INNER JOIN reviews ON reviews.movieId = movies.id WHERE movies.id = ?";
 
     try (var con = DB.getConnection();
          var stmt = con.prepareStatement(query)) {
@@ -138,7 +138,7 @@ public class MovieRepository {
     }
   }
 
-//  public static void main(String[] args) throws SQLException {
-//    System.out.println(MovieRepository.findByGenre("Drama"));
-//  }
+  public static void main(String[] args) throws SQLException {
+    System.out.println(MovieRepository.findById(2));
+  }
 }
