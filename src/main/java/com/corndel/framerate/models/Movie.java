@@ -49,4 +49,17 @@ public class Movie {
   public List<Genre> genres;
   public int runtime;
   public String imageURL;
+
+  @Override
+  public String toString() {
+    return "Movie{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", releaseDate='" + releaseDate + '\'' +
+            ", ageRating='" + ageRating + '\'' +
+            ", genres=" + genres +
+            ", runtime=" + runtime +
+            ", imageURL='" + imageURL + '\'' +
+            '}';
+  }
 }
