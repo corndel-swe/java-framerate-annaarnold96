@@ -9,20 +9,24 @@
 <h1>Movie List</h1>
 <table>
     <tr>
+        <th></th>
         <th>Id</th>
         <th>Title</th>
         <th>Release Date</th>
         <th>Age Rating</th>
         <th>Genres</th>
         <th>Runtime</th>
+        <th>Review</th>
     </tr>
     <tr th:each="movie : ${m}">
+        <td><img width="100px" th:src="${movie.imageURL}"/></td>
         <td th:text="${movie.id}"></td>
         <td th:text="${movie.title}"></td>
         <td th:text="${movie.releaseDate}"></td>
         <td th:text="${movie.ageRating}"></td>
         <td th:text="${movie.genres}"></td>
         <td th:text="${movie.runtime}"></td>
+        <td th:text="${movie.review}"></td>
     </tr>
 </table>
 </body>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+<h1>Movie List</h1>
+<table>
+    <tr>
+        <th></th>
+        <th>Id</th>
+        <th>Movie ID</th>
+        <th>Created at</th>
+        <th>Content</th>
+        <th>Rating</th>
+
+    </tr>
+    <tr th:each="review : ${r}">
+        <td th:text="${review.id}"></td>
+        <td th:text="${review.movieId}"></td>
+        <td th:text="${review.movieTitle}"></td>
+        <td th:text="${review.createdAt}"></td>
+        <td th:text="${review.content}"></td>
+        <td th:text="${review.rating}"></td>
+    </tr>
+</table>
+</body>
+</html>
