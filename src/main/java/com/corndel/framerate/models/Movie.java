@@ -42,6 +42,25 @@ public class Movie {
     this.imageURL = imageURL;
   }
 
+  public Movie(
+          int id,
+          String title,
+          String releaseDate,
+          String ageRating,
+          List<Genre> genres,
+          int runtime,
+          String imageURL,
+          String review) {
+    this.id = id;
+    this.title = title;
+    this.releaseDate = releaseDate;
+    this.ageRating = ageRating;
+    this.genres = genres;
+    this.runtime = runtime;
+    this.imageURL = imageURL;
+    this.review = review;
+  }
+
   private int id;
   public String title;
   public String releaseDate;
@@ -49,6 +68,7 @@ public class Movie {
   public List<Genre> genres;
   public int runtime;
   public String imageURL;
+  public String review;
 
   @Override
   public String toString() {
@@ -117,5 +137,13 @@ public class Movie {
 
   public void setImageURL(String imageURL) {
     this.imageURL = imageURL;
+  }
+
+  public String getReview() {
+    return review;
+  }
+
+  public void setReview(String review) {
+    this.review = review;
   }
 }

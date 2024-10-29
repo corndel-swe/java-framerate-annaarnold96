@@ -35,34 +35,52 @@ public class App {
           config.fileRenderer(new JavalinThymeleaf(engine));
         });
 
+    // Shows a list of all movies
     app.get("/", ctx -> {
       var movies = MovieRepository.findAll();
         ctx.render("index.html", Map.of("m",movies));
     });
 
+    // Gets movie details (inc review) when given an id
     app.get("/movie/{movieId}", ctx -> {
       var id = Integer.parseInt(ctx.pathParam("movieId"));
         var movies = MovieRepository.findById(id);
         ctx.render("index.html", Map.of("m",movies));
     });
 
+    // shows films with the inputted genre
     app.get("/movies/{genre}", ctx -> {
         var genre = ctx.pathParam("genre");
         var users = MovieRepository.findByGenre(genre);
         ctx.json(users);
     });
 
-    app.get("/review",
-            ctx -> {
-                ctx.render("review.html");
+    // Show all reviews
+    app.get("/reviews",
+        ctx -> {
+        var reviews = ReviewRepository.allReviews();
+        ctx.render("showReviews.html", Map.of("r",reviews));
+//                ctx.render("review.html");
             });
 
-    app.post("/review/{movieId}", ctx ->{
-        var id = Integer.parseInt(ctx.pathParam("movieId"));
-        var user = MovieRepository.reviewById(id);
-        ctx.status(HttpStatus.IM_A_TEAPOT).json(user);
+    // Leave a review for a movie with a given id
+    app.get("/review/{movieId}", ctx ->{
+        ctx.render("review.html");
 
     });
+
+    // Post review to database
+    app.post("/review/{movieId}", ctx -> {
+        var id = Integer.parseInt(ctx.pathParam("movieId"));
+          // get the rating
+          int rating = ctx.formParamAsClass("rating", Integer.class).get();
+
+          // get review
+          String review = ctx.formParamAsClass("review", String.class).get();
+
+        var insertReview = ReviewRepository.reviewById(id,rating,review);
+          ctx.result(String.valueOf(insertReview));
+      });
 
     return app;
   }

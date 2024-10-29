@@ -42,35 +42,7 @@ public class MovieRepository {
     }
   }
 
-  public static Movie reviewById(int id) throws SQLException {
-    var query = "SELECT * FROM MOVIES WHERE id = ?";
 
-    try (var con = DB.getConnection();
-         var stmt = con.prepareStatement(query)) {
-
-      stmt.setInt(1, id);
-
-      try (var rs = stmt.executeQuery()) {
-        if (!rs.next()) {
-          return null;
-        }
-
-        var title = rs.getString("title");
-        var releaseDate = rs.getString("releaseDate");
-        var ageRating = rs.getString("ageRating");
-        var runtime = rs.getInt("runtime");
-        var imageURL = rs.getString("imageURL");
-
-        String genreString = rs.getString("genre");
-        List<Genre> genres = Arrays.stream(genreString.split(","))
-                .map(String::trim)
-                .map(Genre::valueOf)
-                .collect(Collectors.toList());
-
-        return new Movie(id, title, releaseDate, ageRating, genres, runtime, imageURL);
-      }
-    }
-  }
 
   public static Movie findById(int id) throws SQLException {
     var query = "SELECT movies.*, reviews.content FROM movies INNER JOIN reviews ON reviews.movieId = movies.id WHERE movies.id = ?";
@@ -90,10 +62,7 @@ public class MovieRepository {
         var ageRating = rs.getString("ageRating");
         var runtime = rs.getInt("runtime");
         var imageURL = rs.getString("imageURL");
-        var content = rs.getString("content");
-
-        // REFACTOR MOVIE MODEL OR MAKE NEW MODEL FOR MOVIE WITH REVIEWS
-        System.out.println(content);
+        var review = rs.getString("content");
 
         String genreString = rs.getString("genre");
         List<Genre> genres = Arrays.stream(genreString.split(","))
@@ -101,7 +70,7 @@ public class MovieRepository {
                 .map(Genre::valueOf)
                 .collect(Collectors.toList());
 
-        return new Movie(id, title, releaseDate, ageRating, genres, runtime, imageURL);
+        return new Movie(id, title, releaseDate, ageRating, genres, runtime, imageURL,review);
       }
     }
   }
