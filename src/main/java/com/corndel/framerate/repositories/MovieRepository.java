@@ -73,7 +73,7 @@ public class MovieRepository {
   }
 
   public static Movie findById(int id) throws SQLException {
-    var query = "SELECT * FROM MOVIES WHERE id = ?";
+    var query = "SELECT movies.*, reviews.content FROM movies INNER JOIN reviews ON reviews.movieId = movies.id WHERE movies.id = ?";
 
     try (var con = DB.getConnection();
          var stmt = con.prepareStatement(query)) {
@@ -90,6 +90,10 @@ public class MovieRepository {
         var ageRating = rs.getString("ageRating");
         var runtime = rs.getInt("runtime");
         var imageURL = rs.getString("imageURL");
+        var content = rs.getString("content");
+
+        // REFACTOR MOVIE MODEL OR MAKE NEW MODEL FOR MOVIE WITH REVIEWS
+        System.out.println(content);
 
         String genreString = rs.getString("genre");
         List<Genre> genres = Arrays.stream(genreString.split(","))
@@ -138,7 +142,7 @@ public class MovieRepository {
     }
   }
 
-//  public static void main(String[] args) throws SQLException {
-//    System.out.println(MovieRepository.findByGenre("Drama"));
-//  }
+  public static void main(String[] args) throws SQLException {
+    System.out.println(MovieRepository.findById(2));
+  }
 }
