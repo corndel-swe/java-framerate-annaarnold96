@@ -26,7 +26,7 @@ public class D2E3Tests {
           var form = document.select("form").first();
 
           assertThat(form.attr("action")).isEqualTo("/submit");
-          assertThat(form.attr("method")).isEqualTo("post");
+          assertThat(form.attr("method")).isEqualTo("POST");
         });
   }
 
