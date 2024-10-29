@@ -26,9 +26,15 @@ public class D2E1 {
         "/d2e1",
         ctx -> {
           // TODO: Render 'd2e1.html'
+            ctx.render("d2e1.html");
           // TODO: Open d2e1.html and follow the instructions
         });
 
     return app;
   }
+
+    public static void main(String[] args) {
+        var javalin = createApp();
+        javalin.start(8081);
+    }
 }
